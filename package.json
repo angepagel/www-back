@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/angepagel/www-back#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "pg-promise": "^8.5.6"
