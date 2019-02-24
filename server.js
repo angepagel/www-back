@@ -9,5 +9,6 @@ app.use(cors());
 app.listen(process.env.PORT);
 
 app.get('/api/users', database.getAllUsers);
+app.get('/api/posts', database.getAllPosts);
 
 module.exports = app;

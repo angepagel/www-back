@@ -27,7 +27,23 @@ function getAllUsers(req, res, next) {
     })
 }
 
+function getAllPosts(req, res, next) {
+  database.any('SELECT id, category, title, image, body, date FROM posts')
+    .then(function(data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved all blog posts'
+        })
+    })
+    .catch(function(error) {
+        return next(error);
+    })
+}
+
 
 module.exports = {
   getAllUsers: getAllUsers,
+  getAllPosts: getAllPosts
 };
