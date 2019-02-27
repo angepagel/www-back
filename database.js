@@ -56,6 +56,26 @@ async function userExists(username) {
   return user;
 }
 
+async function authenticate(username, password) {
+  let auth = false;
+
+  try {
+    const user = await userExists(username);
+
+    if (user !== null) {
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        auth = true;
+      }
+    }
+  }
+  catch(error) {
+    console.error(error);
+  }
+
+  return auth;
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getAllPosts: getAllPosts
