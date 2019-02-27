@@ -43,6 +43,19 @@ function getAllPosts(req, res, next) {
 }
 
 
+async function userExists(username) {
+  let user = null;
+
+  try {
+    user = await database.oneOrNone(`SELECT id, username, password FROM users WHERE username LIKE '${username}'`);
+  }
+  catch(error) {
+    console.error(error);
+  }
+
+  return user;
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getAllPosts: getAllPosts
