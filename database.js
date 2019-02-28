@@ -1,5 +1,7 @@
 const pgp = require('pg-promise')();
 const dotenv = require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const config = {
   host: process.env.DB_HOST,
@@ -76,7 +78,40 @@ async function authenticate(username, password) {
   return auth;
 }
 
+async function login(req, res) {
+
+  try {
+    const { username, password } = req.body;
+
+    if (await authenticate(username, password)) {
+      const token = jwt.sign(
+        { username: username },
+        process.env.JWT_SECRET,
+        {
+          algorithm: process.env.JWT_ALGORITHM,
+          expiresIn: process.env.JWT_EXPIRATION
+        }
+      );
+      res.json({
+        apicode: 'successful_login',
+        token: token
+      })
+    }
+    else {
+      res.json({
+        apicode: 'bad_credentials'
+      })
+    }
+  }
+  catch(error) {
+    console.error(error);
+  }
+  
+}
+
+
 module.exports = {
   getAllUsers: getAllUsers,
-  getAllPosts: getAllPosts
+  getAllPosts: getAllPosts,
+  login: login
 };
