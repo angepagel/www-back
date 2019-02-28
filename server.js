@@ -16,5 +16,6 @@ app.listen(process.env.PORT, () => {
 
 app.get('/api/users', database.getAllUsers);
 app.get('/api/posts', database.getAllPosts);
+app.post('/api/login', database.login);
 
 module.exports = app;
