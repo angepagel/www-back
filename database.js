@@ -64,6 +64,23 @@ function getAllPosts(req, res, next) {
 }
 
 
+function createPost(req, res, next) {
+  const { category, title, body, image } = req.body;
+  database.none('INSERT INTO posts (author, category, title, body, image, date) VALUES (1, $1, $2, $3, $4, NOW())',
+    [category, title, body, image])
+    .then(() => {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Created one post'
+        })
+    })
+    .catch(function(error) {
+      return next(error);
+    })
+}
+
+
 async function userExists(username) {
   let user = null;
 
@@ -133,5 +150,6 @@ module.exports = {
   getAllUsers: getAllUsers,
   getAllPosts: getAllPosts,
   getPost: getPost,
+  createPost: createPost,
   login: login
 };
