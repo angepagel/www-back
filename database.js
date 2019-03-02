@@ -30,7 +30,7 @@ function getAllUsers(req, res, next) {
 }
 
 function getAllPosts(req, res, next) {
-  database.any('SELECT id, category, title, image, body, date FROM posts')
+  database.any("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts")
     .then(function(data) {
       res.status(200)
         .json({
