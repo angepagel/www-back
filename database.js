@@ -29,6 +29,25 @@ function getAllUsers(req, res, next) {
     })
 }
 
+
+function getPost(req, res, next) {
+  let postID = parseInt(req.params.id);
+
+  database.one(`SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts WHERE id = ${postID}`)
+  .then(function(data) {
+    res.status(200)
+      .json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved one blog post'
+      })
+  })
+  .catch(function(error) {
+    return next(error);
+  })
+}
+
+
 function getAllPosts(req, res, next) {
   database.any("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts")
     .then(function(data) {
@@ -113,5 +132,6 @@ async function login(req, res) {
 module.exports = {
   getAllUsers: getAllUsers,
   getAllPosts: getAllPosts,
+  getPost: getPost,
   login: login
 };
