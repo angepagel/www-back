@@ -81,6 +81,25 @@ function createPost(req, res, next) {
 }
 
 
+function updatePost(req, res, next) {
+  const postID = parseInt(req.params.id);
+  const { category, title, body, image } = req.body;
+
+  database.none("UPDATE posts SET category='$1', title=$2, body=$3, image=$4 WHERE id=$5",
+  [category, title, body, image, postID])
+  .then(() => {
+    res.status(200)
+      .json({
+        status: 'success',
+        message: 'Updated one post'
+      })
+  })
+  .catch(function(error) {
+    return next(error);
+  })
+}
+
+
 async function userExists(username) {
   let user = null;
 
@@ -151,5 +170,6 @@ module.exports = {
   getAllPosts: getAllPosts,
   getPost: getPost,
   createPost: createPost,
+  updatePost: updatePost,
   login: login
 };
