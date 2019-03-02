@@ -15,18 +15,17 @@ const database = pgp(config);
 
 
 function getAllUsers(req, res, next) {
-  database.any('SELECT id, username FROM users')
-    .then(function(data) {
+  database.any("SELECT id, username FROM users")
+    .then(data => {
       res.status(200)
         .json({
-          status: 'success',
           data: data,
           message: 'Retrieved all users'
         })
     })
-    .catch(function(error) {
-        return next(error);
-    })
+    .catch(
+      error => console.log(error)
+    );
 }
 
 
@@ -34,50 +33,47 @@ function getPost(req, res, next) {
   let postID = parseInt(req.params.id);
 
   database.one(`SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts WHERE id = ${postID}`)
-  .then(function(data) {
-    res.status(200)
-      .json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved one blog post'
-      })
-  })
-  .catch(function(error) {
-    return next(error);
-  })
+    .then(data => {
+      res.status(200)
+        .json({
+          data: data,
+          message: 'Retrieved one blog post'
+        })
+    })
+    .catch(
+      error => console.log(error)
+    );
 }
 
 
 function getAllPosts(req, res, next) {
   database.any("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts")
-    .then(function(data) {
+    .then(data => {
       res.status(200)
         .json({
-          status: 'success',
           data: data,
           message: 'Retrieved all blog posts'
         })
     })
-    .catch(function(error) {
-        return next(error);
-    })
+    .catch(
+      error => console.log(error)
+    );
 }
 
 
 function createPost(req, res, next) {
   const { category, title, body, image } = req.body;
-  database.none('INSERT INTO posts (author, category, title, body, image, date) VALUES (1, $1, $2, $3, $4, NOW())',
-    [category, title, body, image])
+
+  database.none(`INSERT INTO posts (author, category, title, body, image, date) VALUES (1, '${category}', '${title}', '${body}', '${image}', NOW())`)
     .then(() => {
       res.status(200)
         .json({
-          status: 'success',
           message: 'Created one post'
         })
     })
-    .catch(function(error) {
-      return next(error);
-    })
+    .catch(
+      error => console.log(error)
+    );
 }
 
 
@@ -85,18 +81,16 @@ function updatePost(req, res, next) {
   const postID = parseInt(req.params.id);
   const { category, title, body, image } = req.body;
 
-  database.none("UPDATE posts SET category='$1', title=$2, body=$3, image=$4 WHERE id=$5",
-  [category, title, body, image, postID])
-  .then(() => {
-    res.status(200)
-      .json({
-        status: 'success',
-        message: 'Updated one post'
-      })
-  })
-  .catch(function(error) {
-    return next(error);
-  })
+  database.none(`UPDATE posts SET category='${category}', title='${title}', body='${body}', image='${image}' WHERE id='${postID}'`)
+    .then(() => {
+      res.status(200)
+        .json({
+          message: 'Updated one post'
+        })
+    })
+    .catch(
+      error => console.log(error)
+    );
 }
 
 
@@ -133,7 +127,7 @@ async function authenticate(username, password) {
   return auth;
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
 
   try {
     const { username, password } = req.body;
@@ -161,7 +155,7 @@ async function login(req, res) {
   catch(error) {
     console.error(error);
   }
-  
+
 }
 
 
