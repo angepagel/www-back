@@ -81,7 +81,7 @@ function updatePost(req, res, next) {
   const postID = parseInt(req.params.id);
   const { category, title, body, image } = req.body;
 
-  database.none(`UPDATE posts SET category='${category}', title='${title}', body='${body}', image='${image}' WHERE id='${postID}'`)
+  database.none(`UPDATE posts SET category='${category}', title='${title}', body='${body}', image='${image}' WHERE id=${postID}`)
     .then(() => {
       res.status(200)
         .json({
