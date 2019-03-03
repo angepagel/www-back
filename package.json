@@ -26,7 +26,8 @@
     "jsonwebtoken": "^8.5.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
-    "pg-promise": "^8.5.6"
+    "pg-promise": "^8.5.6",
+    "serve-static": "^1.13.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
