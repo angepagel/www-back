@@ -2,10 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const multer = require('multer');
 const serveStatic = require('serve-static')
 const dotenv = require('dotenv').config();
 const database = require('./database');
 const app = express();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage });
 
 app.use(cors());
 app.use(bodyParser.json());
