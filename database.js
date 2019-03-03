@@ -93,6 +93,20 @@ function updatePost(req, res, next) {
     );
 }
 
+function deletePost(req, res, next) {
+  const postID = parseInt(req.params.id);
+
+  database.none(`DELETE FROM posts WHERE id=${postID}`)
+    .then(() => {
+      res.status(200)
+        .json({
+          message: 'Deleted one post'
+        })
+    })
+    .catch(
+      error => console.log(error)
+    );
+}
 
 async function userExists(username) {
   let user = null;
@@ -165,5 +179,6 @@ module.exports = {
   getPost: getPost,
   createPost: createPost,
   updatePost: updatePost,
+  deletePost: deletePost,
   login: login
 };

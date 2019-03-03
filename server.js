@@ -19,6 +19,7 @@ app.get('/api/posts', database.getAllPosts);
 app.get('/api/posts/:id', database.getPost);
 app.post('/api/posts', database.createPost);
 app.post('/api/posts/:id', database.updatePost);
+app.delete('/api/posts/:id', database.deletePost);
 app.post('/api/login', database.login);
 
 module.exports = app;
