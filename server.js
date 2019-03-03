@@ -34,5 +34,6 @@ app.post('/api/posts', database.createPost);
 app.post('/api/posts/:id', database.updatePost);
 app.delete('/api/posts/:id', database.deletePost);
 app.post('/api/login', database.login);
+app.post('/api/upload', upload.array('files'), database.upload);
 
 module.exports = app;

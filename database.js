@@ -172,6 +172,12 @@ async function login(req, res, next) {
 
 }
 
+function upload(req, res, next) {
+  res.json({
+    apicode: 'files_uploaded'
+  })
+}
+
 
 module.exports = {
   getAllUsers: getAllUsers,
@@ -180,5 +186,6 @@ module.exports = {
   createPost: createPost,
   updatePost: updatePost,
   deletePost: deletePost,
-  login: login
+  login: login,
+  upload: upload
 };
