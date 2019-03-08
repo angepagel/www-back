@@ -100,7 +100,7 @@ function deletePost(req, res, next) {
     .then(() => {
       res.status(200)
         .json({
-          message: 'Deleted one post'
+          apicode: 'post_deleted'
         })
     })
     .catch(
