@@ -173,8 +173,15 @@ async function login(req, res, next) {
 }
 
 function upload(req, res, next) {
+  let urls = [];
+
+  req.files.forEach(file => {
+    urls.push(`${process.env.PROTOCOL}://${process.env.SERVER_NAME}:${process.env.PORT}/uploads/${file.originalname}`);
+  })
+
   res.json({
-    apicode: 'files_uploaded'
+    apicode: 'files_uploaded',
+    urls: urls
   })
 }
 
