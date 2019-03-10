@@ -32,7 +32,7 @@ function getAllUsers(req, res, next) {
 function getPost(req, res, next) {
   let postID = parseInt(req.params.id);
 
-  database.one(`SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts WHERE id = ${postID}`)
+  database.one("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts WHERE id = $1", [postID])
     .then(data => {
       res.status(200)
         .json({
@@ -64,7 +64,7 @@ function getAllPosts(req, res, next) {
 function createPost(req, res, next) {
   const { category, title, body, image } = req.body;
 
-  database.none(`INSERT INTO posts (author, category, title, body, image, date) VALUES (1, '${category}', '${title}', '${body}', '${image}', NOW())`)
+  database.none("INSERT INTO posts (author, category, title, body, image, date) VALUES (1, $1, $2, $3, $4, NOW())", [category, title, body, image])
     .then(() => {
       res.status(200)
         .json({
@@ -81,7 +81,7 @@ function updatePost(req, res, next) {
   const postID = parseInt(req.params.id);
   const { category, title, body, image } = req.body;
 
-  database.none(`UPDATE posts SET category='${category}', title='${title}', body='${body}', image='${image}' WHERE id=${postID}`)
+  database.none("UPDATE posts SET category=$1, title=$2, body=$3, image=$4 WHERE id=$5", [category, title, body, image, postID])
     .then(() => {
       res.status(200)
         .json({
@@ -96,7 +96,7 @@ function updatePost(req, res, next) {
 function deletePost(req, res, next) {
   const postID = parseInt(req.params.id);
 
-  database.none(`DELETE FROM posts WHERE id=${postID}`)
+  database.none("DELETE FROM posts WHERE id=$1", [postID])
     .then(() => {
       res.status(200)
         .json({
@@ -112,7 +112,7 @@ async function userExists(username) {
   let user = null;
 
   try {
-    user = await database.oneOrNone(`SELECT id, username, password FROM users WHERE username LIKE '${username}'`);
+    user = await database.oneOrNone("SELECT id, username, password FROM users WHERE username LIKE $1", [username]);
   }
   catch(error) {
     console.error(error);
