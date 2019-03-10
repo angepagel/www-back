@@ -17,14 +17,13 @@ const database = pgp(config);
 function getAllUsers(req, res, next) {
   database.any("SELECT id, username FROM users")
     .then(data => {
-      res.status(200)
-        .json({
-          data: data,
-          message: 'Retrieved all users'
-        })
+      res.json({
+        data: data,
+        message: 'Retrieved all users'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
@@ -34,14 +33,13 @@ function getPost(req, res, next) {
 
   database.one("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts WHERE id = $1", [postID])
     .then(data => {
-      res.status(200)
-        .json({
-          data: data,
-          message: 'Retrieved one blog post'
-        })
+      res.json({
+        data: data,
+        message: 'Retrieved one blog post'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
@@ -49,14 +47,13 @@ function getPost(req, res, next) {
 function getAllPosts(req, res, next) {
   database.any("SELECT id, category, title, image, body, TO_CHAR(date, 'dd Month yyyy') as date FROM posts")
     .then(data => {
-      res.status(200)
-        .json({
-          data: data,
-          message: 'Retrieved all blog posts'
-        })
+      res.json({
+        data: data,
+        message: 'Retrieved all blog posts'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
@@ -66,13 +63,12 @@ function createPost(req, res, next) {
 
   database.none("INSERT INTO posts (author, category, title, body, image, date) VALUES (1, $1, $2, $3, $4, NOW())", [category, title, body, image])
     .then(() => {
-      res.status(200)
-        .json({
-          message: 'Created one post'
-        })
+      res.json({
+        apicode: 'post_created'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
@@ -83,13 +79,12 @@ function updatePost(req, res, next) {
 
   database.none("UPDATE posts SET category=$1, title=$2, body=$3, image=$4 WHERE id=$5", [category, title, body, image, postID])
     .then(() => {
-      res.status(200)
-        .json({
-          message: 'Updated one post'
-        })
+      res.json({
+        apicode: 'post_updated'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
@@ -98,13 +93,12 @@ function deletePost(req, res, next) {
 
   database.none("DELETE FROM posts WHERE id=$1", [postID])
     .then(() => {
-      res.status(200)
-        .json({
-          apicode: 'post_deleted'
-        })
+      res.json({
+        apicode: 'post_deleted'
+      })
     })
     .catch(
-      error => console.log(error)
+      error => console.error(error)
     );
 }
 
