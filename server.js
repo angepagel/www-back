@@ -30,6 +30,7 @@ app.listen(process.env.PORT, () => {
 app.get('/api/users', database.getAllUsers);
 app.get('/api/posts', database.getAllPosts);
 app.get('/api/posts/:id', database.getPost);
+app.get('/api/latestpost', database.getLatestPost);
 app.post('/api/posts', database.createPost);
 app.post('/api/posts/:id', database.updatePost);
 app.delete('/api/posts/:id', database.deletePost);

@@ -58,6 +58,20 @@ function getAllPosts(req, res, next) {
 }
 
 
+function getLatestPost(req, res, next) {
+  database.one("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC LIMIT 1")
+    .then(data => {
+      res.json({
+        data: data,
+        message: 'Retrieved latest blog post'
+      })
+    })
+    .catch(
+      error => console.error(error)
+    );
+}
+
+
 function createPost(req, res, next) {
   const { category, title, body, image } = req.body;
 
@@ -184,6 +198,7 @@ module.exports = {
   getAllUsers: getAllUsers,
   getAllPosts: getAllPosts,
   getPost: getPost,
+  getLatestPost: getLatestPost,
   createPost: createPost,
   updatePost: updatePost,
   deletePost: deletePost,
