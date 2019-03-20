@@ -45,7 +45,7 @@ function getPost(req, res, next) {
 
 
 function getAllPosts(req, res, next) {
-  database.any("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts")
+  database.any("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC")
     .then(data => {
       res.json({
         data: data,
