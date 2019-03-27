@@ -206,6 +206,16 @@ function getUploads(req, res, next) {
 
 }
 
+function deleteUpload(req, res, next) {
+  let { fileName } = req.body;
+
+  fs.unlinkSync(`./uploads/${fileName}`);
+  res.json({
+    apicode: 'file_deleted',
+  });
+  
+}
+
 
 module.exports = {
   getAllUsers: getAllUsers,
@@ -218,4 +228,5 @@ module.exports = {
   login: login,
   upload: upload,
   getUploads: getUploads,
+  deleteUpload: deleteUpload
 };
