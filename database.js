@@ -31,7 +31,7 @@ function getAllUsers(req, res, next) {
 function getPost(req, res, next) {
   let postID = parseInt(req.params.id);
 
-  database.one("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts WHERE id = $1", [postID])
+  database.one("SELECT id, category, title, image, img_credit, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts WHERE id = $1", [postID])
     .then(data => {
       res.json({
         data: data,
@@ -45,7 +45,7 @@ function getPost(req, res, next) {
 
 
 function getAllPosts(req, res, next) {
-  database.any("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC")
+  database.any("SELECT id, category, title, image, img_credit, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC")
     .then(data => {
       res.json({
         data: data,
@@ -59,7 +59,7 @@ function getAllPosts(req, res, next) {
 
 
 function getLatestPost(req, res, next) {
-  database.one("SELECT id, category, title, image, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC LIMIT 1")
+  database.one("SELECT id, category, title, image, img_credit, body, date, TO_CHAR(date, 'dd Month yyyy') as datestr FROM posts ORDER BY date DESC LIMIT 1")
     .then(data => {
       res.json({
         data: data,
