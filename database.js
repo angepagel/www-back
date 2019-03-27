@@ -73,9 +73,9 @@ function getLatestPost(req, res, next) {
 
 
 function createPost(req, res, next) {
-  const { category, title, body, image } = req.body;
+  const { category, title, body, image, img_credit } = req.body;
 
-  database.none("INSERT INTO posts (author, category, title, body, image, date) VALUES (1, $1, $2, $3, $4, NOW())", [category, title, body, image])
+  database.none("INSERT INTO posts (author, category, title, body, image, img_credit, date) VALUES (1, $1, $2, $3, $4, $5, NOW())", [category, title, body, image, img_credit])
     .then(() => {
       res.json({
         apicode: 'post_created'
@@ -89,9 +89,9 @@ function createPost(req, res, next) {
 
 function updatePost(req, res, next) {
   const postID = parseInt(req.params.id);
-  const { category, title, body, image } = req.body;
+  const { category, title, body, image, img_credit } = req.body;
 
-  database.none("UPDATE posts SET category=$1, title=$2, body=$3, image=$4 WHERE id=$5", [category, title, body, image, postID])
+  database.none("UPDATE posts SET category=$1, title=$2, body=$3, image=$4, img_credit=$5 WHERE id=$6", [category, title, body, image, img_credit, postID])
     .then(() => {
       res.json({
         apicode: 'post_updated'
