@@ -2,6 +2,8 @@ const pgp = require('pg-promise')();
 const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const fs = require('fs');
 
 const config = {
   host: process.env.DB_HOST,
@@ -193,6 +195,17 @@ function upload(req, res, next) {
   })
 }
 
+function getUploads(req, res, next) {
+  const dirPath = path.join(__dirname, 'uploads');
+
+  fs.readdir(dirPath, (err, files) => {
+    res.json({
+      data: files
+    })
+  });
+
+}
+
 
 module.exports = {
   getAllUsers: getAllUsers,
@@ -203,5 +216,6 @@ module.exports = {
   updatePost: updatePost,
   deletePost: deletePost,
   login: login,
-  upload: upload
+  upload: upload,
+  getUploads: getUploads,
 };
