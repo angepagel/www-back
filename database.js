@@ -53,10 +53,10 @@ function userExists(username) {
 
 
 module.exports = {
-  getPost       : getPost,
-  getAllPosts   : getAllPosts,
-  createPost    : createPost,
-  updatePost    : updatePost,
-  deletePost    : deletePost,
-  userExists    : userExists
+  getPost,
+  getAllPosts,
+  createPost,
+  updatePost,
+  deletePost,
+  userExists
 }

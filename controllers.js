@@ -145,14 +145,14 @@ function deleteUpload(req, res, next) {
 
 
 module.exports = {
-  getAllPosts   : getAllPosts,
-  getPost       : getPost,
-  getLatestPost : getLatestPost,
-  createPost    : createPost,
-  updatePost    : updatePost,
-  deletePost    : deletePost,
-  login         : login,
-  upload        : upload,
-  getUploads    : getUploads,
-  deleteUpload  : deleteUpload
+  getAllPosts,
+  getPost,
+  getLatestPost,
+  createPost,
+  updatePost,
+  deletePost,
+  login,
+  upload,
+  getUploads,
+  deleteUpload
 }

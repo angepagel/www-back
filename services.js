@@ -37,6 +37,6 @@ async function generateToken(username) {
 
 
 module.exports = {
-  authenticate  : authenticate,
-  generateToken : generateToken
+  authenticate,
+  generateToken
 }
