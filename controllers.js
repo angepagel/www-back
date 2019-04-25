@@ -119,8 +119,19 @@ function getUploads(req, res, next) {
   const dirPath = path.join(__dirname, 'uploads');
 
   try {
-    fs.readdir(dirPath, (error, files) => {
+    fs.readdir(dirPath, (error, fileNames) => {
       if (error) throw error;
+
+      let files = [];
+      fileNames.map((fileName) => {
+        const mtime = fs.statSync(`${dirPath}/${fileName}`).mtime.getTime();
+        const date = new Date(mtime);
+        files.push({
+          fileName: fileName,
+          date: date
+        })
+      });
+
       res.json({ data: files });
     });
   }
