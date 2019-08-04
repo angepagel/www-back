@@ -124,10 +124,15 @@ function getUploads(req, res, next) {
 
       let files = [];
       fileNames.map((fileName) => {
-        const mtime = fs.statSync(`${dirPath}/${fileName}`).mtime.getTime();
+        const stats = fs.statSync(`${dirPath}/${fileName}`)
+        const mtime = stats.mtime.getTime();
+
+        const sizeInBytes = stats.size;
         const date = new Date(mtime);
+
         files.push({
           fileName: fileName,
+          size: sizeInBytes,
           date: date
         })
       });
